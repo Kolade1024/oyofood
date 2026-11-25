@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+/*
+ * OYO Food design tokens
+ * ----------------------
+ * Brand orange is an accent (fills, indicators, focus), never small text on white:
+ * use `text-brand-fg` / `text-ok-fg` / `text-bad-fg` for readable tinted text (≥4.5:1).
+ */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* brand */
+  --color-brand: #ee8a06;
+  --color-brand-600: #d97a00;
+  --color-brand-700: #b86700;
+  --color-brand-fg: #a35c00;
+  --color-brand-50: #fff8ec;
+  --color-brand-100: #fdecc8;
+
+  /* neutrals */
+  --color-ink: #111827;
+  --color-muted: #6b7280;
+  --color-subtle: #9ca3af; /* icons and placeholders only, never body text */
+  --color-line: #e5e7eb;
+  --color-line-strong: #d1d5db;
+  --color-field: #8b929c; /* form-control border, 3:1 on white */
+  --color-canvas: #f7f7f8;
+  --color-hover: #f3f4f6;
+
+  /* semantic */
+  --color-ok: #10b981;
+  --color-ok-fg: #047857;
+  --color-ok-50: #ecfdf5;
+  --color-bad: #ef4444;
+  --color-bad-fg: #b91c1c;
+  --color-bad-50: #fef2f2;
+  --color-info: #2563eb;
+  --color-info-fg: #1d4ed8;
+  --color-info-50: #eff6ff;
+
+  /* elevation: paired with `border border-transparent` so forced-colors still draws an edge */
+  --shadow-card: 0 0 0 1px oklch(0 0 0 / 0.06), 0 1px 2px oklch(0 0 0 / 0.04);
+  --shadow-raised: 0 0 0 1px oklch(0 0 0 / 0.06), 0 2px 4px oklch(0 0 0 / 0.04), 0 8px 20px -6px oklch(0 0 0 / 0.1);
+  --shadow-overlay: 0 0 0 1px oklch(0 0 0 / 0.06), 0 8px 16px -4px oklch(0 0 0 / 0.08), 0 24px 48px -12px oklch(0 0 0 / 0.22);
+
+  /* motion: strong ease-out for UI, iOS-like curve for panels. Never ease-in. */
+  --ease-snappy: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --animate-fade-in: fade-in 160ms var(--ease-snappy) both;
+  --animate-fade-out: fade-out 150ms var(--ease-snappy) both;
+  --animate-pop-in: pop-in 200ms var(--ease-snappy) both;
+  --animate-pop-out: pop-out 140ms var(--ease-snappy) both;
+  --animate-sheet-in: sheet-in 320ms var(--ease-drawer) both;
+  --animate-sheet-out: sheet-out 200ms var(--ease-drawer) both;
+  --animate-drawer-in: drawer-in 300ms var(--ease-drawer) both;
+  --animate-drawer-out: drawer-out 190ms var(--ease-drawer) both;
+  --animate-toast-out: toast-out 200ms var(--ease-snappy) 3000ms forwards;
+  --animate-shake: shake 320ms var(--ease-snappy);
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+  }
+  @keyframes fade-out {
+    to { opacity: 0; }
+  }
+  @keyframes pop-in {
+    from { opacity: 0; transform: translateY(6px) scale(0.98); }
+  }
+  @keyframes pop-out {
+    to { opacity: 0; transform: translateY(4px) scale(0.98); }
+  }
+  @keyframes sheet-in {
+    from { transform: translateX(100%); }
+  }
+  @keyframes sheet-out {
+    to { transform: translateX(100%); }
+  }
+  @keyframes drawer-in {
+    from { transform: translateX(-100%); }
+  }
+  @keyframes drawer-out {
+    to { transform: translateX(-100%); }
+  }
+  @keyframes toast-out {
+    to { opacity: 0; transform: translateY(4px) scale(0.97); }
+  }
+  @keyframes shake {
+    20%, 60% { transform: translateX(-4px); }
+    40%, 80% { transform: translateX(4px); }
+  }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+button,
+a,
+[role="switch"],
+[role="checkbox"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* One focus treatment everywhere: visible only for keyboard users. */
+:focus-visible {
+  outline: 2px solid var(--color-brand-700);
+  outline-offset: 2px;
+}
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+}
+
+::selection {
+  background: var(--color-brand-100);
+}
+
+/* Legacy gradient (auth screens) */
+.btn-dark {
+  background-image: linear-gradient(90deg, #000 0%, #2b2b2b 55%, #6b6b6b 100%);
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 9999px;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Native time/date pickers: align icon colour with our muted ink. */
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0.55;
+  cursor: pointer;
+}
+
+/*
+ * Reduced motion: fewer and gentler, not zero. Overlays and toasts keep their fade
+ * (it tells you something appeared) but lose all movement.
+ */
+@media (prefers-reduced-motion: reduce) {
+  @keyframes pop-in { from { opacity: 0; } }
+  @keyframes pop-out { to { opacity: 0; } }
+  @keyframes sheet-in { from { opacity: 0; } }
+  @keyframes sheet-out { to { opacity: 0; } }
+  @keyframes drawer-in { from { opacity: 0; } }
+  @keyframes drawer-out { to { opacity: 0; } }
+  @keyframes toast-out { to { opacity: 0; } }
+  @keyframes shake { from { opacity: 1; } }
+  html {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Order, menu, promo and review cards: the card that leaves fades out, the rest slide into place. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+::view-transition-group(*.list-card) {
+  animation-duration: 300ms;
+  animation-timing-function: var(--ease-snappy);
+}
+::view-transition-old(*.list-card):only-child {
+  animation: list-card-out 180ms var(--ease-snappy) both;
+}
+::view-transition-new(*.list-card):only-child {
+  animation: list-card-in 220ms var(--ease-snappy) both;
+}
+@keyframes list-card-out {
+  to { opacity: 0; transform: scale(0.97); }
+}
+@keyframes list-card-in {
+  from { opacity: 0; transform: scale(0.97); }
+}
+
+@media print {
+  aside,
+  [data-print-hide] {
+    display: none !important;
+  }
+}
