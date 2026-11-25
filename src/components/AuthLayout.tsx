@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom'
 import { Select } from './Select'
 import { BrandBadge } from './ui'
 import { useApp } from '../context/AppContext'
+import { cx } from '../lib/format'
 
-/* Swap these for portrait photos (about 900x1400) when available. */
+/* Photos: Pexels (free licence), ids 4353623, 10375885, 3801426. About 1080x1440. */
 const slides = [
-  { image: '/images/hero.jpg', title: 'Start receiving orders from your kitchen' },
-  { image: '/images/meal1.jpg', title: 'Daily payouts to your bank' },
-  { image: '/images/meal2.jpg', title: 'Run your whole restaurant in one place' },
+  { image: '/images/auth/orders.jpg', focus: '50% 0%', title: 'Start receiving orders from your kitchen' },
+  { image: '/images/auth/payouts.jpg', focus: '60% 30%', title: 'Daily payouts to your bank' },
+  { image: '/images/auth/counter.jpg', focus: '50% 30%', title: 'Run your whole restaurant in one place' },
 ]
 
 function PhotoPanel() {
@@ -19,8 +20,19 @@ function PhotoPanel() {
 
   return (
     <aside className="group relative hidden w-[33%] min-w-[360px] max-w-[480px] shrink-0 overflow-hidden rounded-xl rounded-tl-none bg-[#12161d] text-white lg:block">
-      <img key={slide.image} src={slide.image} alt="" className="absolute inset-x-0 top-0 h-[78%] w-full animate-fade-in object-cover" />
-      <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-[#12161d] from-[22%] via-[#12161d]/40 via-50% to-black/30" />
+      {/* All three stay mounted so they are loaded ahead and cross-fade instead of flashing. */}
+      {slides.map((s, n) => (
+        <img
+          key={s.image}
+          src={s.image}
+          alt=""
+          style={{ objectPosition: s.focus }}
+          className={cx('absolute inset-x-0 top-0 h-[84%] w-full object-cover transition-opacity duration-500 ease-snappy', n === i ? 'opacity-100' : 'opacity-0')}
+        />
+      ))}
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-[#12161d] from-[17%] via-[#12161d]/45 via-40% to-transparent to-70%" />
+
+      <div aria-hidden className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/60 to-transparent" />
 
       {/* Logo tab: the page background cut into the panel's corner */}
       <svg aria-hidden width="154" height="78" viewBox="0 0 154 78" className="absolute -left-px -top-px text-canvas">
