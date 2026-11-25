@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { CalendarDays, Download } from 'lucide-react'
-import { Button, Card, CardHeader, Meter, PageBody, PageHeader, Select, StatCard, Table, Td, Th, Tr } from '../../components/ui'
+import { Button, Card, CardHeader, Meter, PageBody, PageHeader, StatCard, Table, Td, Th, Tr } from '../../components/ui'
 import { ChartTooltip, Legend, axisTick, chartColors } from '../../components/charts'
+import { Select } from '../../components/Select'
 import { useApp } from '../../context/AppContext'
 import { categoryPerformance, peakHours, weeklyRevenue } from '../../data/mock'
 import { naira } from '../../lib/format'
@@ -27,21 +28,15 @@ export default function Analytics() {
         title="Analytics"
         actions={
           <>
-            <div className="relative">
-              <CalendarDays size={16} className="pointer-events-none absolute left-3 top-1/2 z-10 -translate-y-1/2 text-muted" />
-              <Select
-                aria-label="Date range"
-                value={range}
-                onChange={(e) => setRange(e.target.value as keyof typeof ranges)}
-                className="w-auto border-line-strong pl-9 text-[13px] font-medium"
-              >
-                {Object.entries(ranges).map(([k, v]) => (
-                  <option key={k} value={k}>
-                    {v.label} ({v.sub})
-                  </option>
-                ))}
-              </Select>
-            </div>
+            <Select
+              aria-label="Date range"
+              align="right"
+              icon={<CalendarDays size={16} />}
+              value={range}
+              onChange={setRange}
+              className="w-auto! border-line-strong font-medium sm:text-[13px]"
+              options={(['7', '30', '90'] as const).map((k) => ({ value: k, label: ranges[k].label, hint: ranges[k].sub }))}
+            />
             <Button
               variant="secondary"
               icon={<Download size={16} />}

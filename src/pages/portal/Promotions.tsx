@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Percent, Plus, TriangleAlert } from 'lucide-react'
-import { Badge, Button, EmptyState, Field, Input, Meter, PageBody, PageHeader, Select, Sheet, StatCard, Tabs } from '../../components/ui'
+import { Badge, Button, EmptyState, Field, Input, Meter, PageBody, PageHeader, Sheet, StatCard, Tabs } from '../../components/ui'
+import { DatePicker } from '../../components/DateTimePickers'
+import { Select } from '../../components/Select'
 import { useApp } from '../../context/AppContext'
 import { categories } from '../../data/mock'
 import type { Promotion } from '../../data/mock'
@@ -178,11 +180,15 @@ export default function Promotions() {
 
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Discount type" required>
-              <Select value={form.type} onChange={(e) => set({ type: e.target.value })}>
-                <option value="percent">Percentage (%)</option>
-                <option value="fixed">Fixed amount (₦)</option>
-                <option value="delivery">Free delivery</option>
-              </Select>
+              <Select
+                value={form.type}
+                onChange={(type) => set({ type })}
+                options={[
+                  { value: 'percent', label: 'Percentage (%)' },
+                  { value: 'fixed', label: 'Fixed amount (₦)' },
+                  { value: 'delivery', label: 'Free delivery' },
+                ]}
+              />
             </Field>
             <Field label="Discount value" required error={errors.value}>
               <Input
@@ -208,8 +214,8 @@ export default function Promotions() {
               Runs from<span className="ml-0.5 text-brand-fg">*</span>
             </p>
             <div className="grid grid-cols-2 gap-3">
-              <Input type="date" aria-label="Start date" value={form.start} invalid={!!errors.start} onChange={(e) => set({ start: e.target.value })} />
-              <Input type="date" aria-label="End date" value={form.end} min={form.start} invalid={!!errors.start} onChange={(e) => set({ end: e.target.value })} />
+              <DatePicker aria-label="Start date" placeholder="Start date" value={form.start} invalid={!!errors.start} onChange={(start) => set({ start })} />
+              <DatePicker aria-label="End date" placeholder="End date" value={form.end} min={form.start} invalid={!!errors.start} onChange={(end) => set({ end })} />
             </div>
             {errors.start && (
               <p role="alert" className="mt-1.5 text-xs font-medium text-bad-fg">
@@ -219,12 +225,7 @@ export default function Promotions() {
           </div>
 
           <Field label="Applies to" required>
-            <Select value={form.category} onChange={(e) => set({ category: e.target.value })}>
-              <option>Entire Store Menu</option>
-              {categories.map((c) => (
-                <option key={c}>{c}</option>
-              ))}
-            </Select>
+            <Select value={form.category} onChange={(category) => set({ category })} options={['Entire Store Menu', ...categories]} />
           </Field>
         </div>
       </Sheet>

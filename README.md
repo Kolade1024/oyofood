@@ -36,4 +36,4 @@ React 19 + TypeScript + Vite, Tailwind CSS v4, React Router, Recharts, lucide-re
 
 ## Next steps for production
 Real API + auth (JWT / Google OAuth), Paystack + NIBSS account lookup, file uploads for KYC,
-websocket/push for live orders, code-splitting (bundle is ~900 kB).
+websocket/push for live orders.

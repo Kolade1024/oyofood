@@ -1,5 +1,3 @@
-import { cx } from '../../lib/format'
-
 export function GoogleIcon({ size = 20 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 48 48" aria-hidden>
@@ -11,19 +9,14 @@ export function GoogleIcon({ size = 20 }: { size?: number }) {
   )
 }
 
-export function GoogleButton({ label, onClick, bold }: { label: string; onClick: () => void; bold?: boolean }) {
+export function GoogleButton({ label, onClick }: { label: string; onClick: () => void }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={cx(
-        'relative flex h-12 w-full items-center justify-center gap-3 rounded-xl bg-white text-[15px] font-semibold text-ink transition hover:bg-gray-50',
-        bold ? 'rounded-full border-2 border-ink' : 'border border-line',
-      )}
+      className="flex h-11 w-full items-center justify-center gap-2.5 rounded-lg border border-line bg-white text-sm font-medium shadow-[0_1px_2px_oklch(0_0_0/0.06)] transition-[background-color,scale] duration-[160ms] ease-snappy hover:bg-canvas motion-safe:active:scale-[0.98]"
     >
-      <span className={cx(!bold && 'absolute left-4')}>
-        <GoogleIcon />
-      </span>
+      <GoogleIcon size={18} />
       {label}
     </button>
   )

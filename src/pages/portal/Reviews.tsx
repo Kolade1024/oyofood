@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { CircleCheck, MessageSquareReply, MessagesSquare } from 'lucide-react'
-import { Avatar, Badge, Button, Card, EmptyState, Meter, PageBody, PageHeader, Select, Stars, Tabs, Textarea } from '../../components/ui'
+import { Avatar, Badge, Button, Card, EmptyState, Meter, PageBody, PageHeader, Stars, Tabs, Textarea } from '../../components/ui'
+import { Select } from '../../components/Select'
 import { useApp } from '../../context/AppContext'
 import { ratingBreakdown } from '../../data/mock'
 import type { Review } from '../../data/mock'
@@ -88,11 +89,18 @@ export default function Reviews() {
               { id: 'photos', label: 'With photos', count: 86 },
             ]}
           />
-          <Select aria-label="Sort reviews" value={sort} onChange={(e) => setSort(e.target.value as typeof sort)} className="h-9 w-auto border-line-strong text-[13px]">
-            <option value="recent">Most recent</option>
-            <option value="high">Highest rating</option>
-            <option value="low">Lowest rating</option>
-          </Select>
+          <Select
+            aria-label="Sort reviews"
+            align="right"
+            value={sort}
+            onChange={setSort}
+            className="h-9 w-auto! border-line-strong sm:text-[13px]"
+            options={[
+              { value: 'recent', label: 'Most recent' },
+              { value: 'high', label: 'Highest rating' },
+              { value: 'low', label: 'Lowest rating' },
+            ]}
+          />
         </div>
 
         <div className="space-y-3">

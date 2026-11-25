@@ -11,11 +11,11 @@ import {
   Modal,
   PageBody,
   PageHeader,
-  Select,
   Toggle,
-  inputBase,
   usePresence,
 } from '../../components/ui'
+import { DatePicker, TimePicker } from '../../components/DateTimePickers'
+import { Select } from '../../components/Select'
 import { useApp } from '../../context/AppContext'
 import { weekDays } from '../../data/mock'
 import { cx } from '../../lib/format'
@@ -148,20 +148,18 @@ export default function OperatingHours() {
                     </span>
                     {d.enabled ? (
                       <span className="flex flex-1 flex-wrap items-center gap-2">
-                        <input
-                          type="time"
+                        <TimePicker
                           aria-label={`${day} opening time`}
                           value={d.open}
-                          onChange={(e) => update(i, { open: e.target.value })}
-                          className={cx(inputBase.replace('w-full ', ''), 'h-9 w-[124px] px-2.5 tabular-nums')}
+                          onChange={(open) => update(i, { open })}
+                          className="h-9 w-[124px]!"
                         />
                         <span className="text-[13px] text-muted">to</span>
-                        <input
-                          type="time"
+                        <TimePicker
                           aria-label={`${day} closing time`}
                           value={d.close}
-                          onChange={(e) => update(i, { close: e.target.value })}
-                          className={cx(inputBase.replace('w-full ', ''), 'h-9 w-[124px] px-2.5 tabular-nums')}
+                          onChange={(close) => update(i, { close })}
+                          className="h-9 w-[124px]!"
                         />
                         <span className="ml-auto flex items-center gap-2 text-[13px] text-muted tabular-nums">
                           {hrs % 1 ? hrs.toFixed(1) : hrs} hrs
@@ -214,11 +212,15 @@ export default function OperatingHours() {
                 <Toggle checked={pickup} onChange={setPickup} label="Customer pickup" />
               </div>
               <Field label="Default prep buffer" className="mt-5 border-t border-line pt-5">
-                <Select value={buffer} onChange={(e) => setBuffer(e.target.value)}>
-                  <option value="10-15">10–15 min · fast</option>
-                  <option value="15-20">15–20 min · standard</option>
-                  <option value="25-35">25–35 min · busy kitchen</option>
-                </Select>
+                <Select
+                  value={buffer}
+                  onChange={setBuffer}
+                  options={[
+                    { value: '10-15', label: '10–15 min · fast' },
+                    { value: '15-20', label: '15–20 min · standard' },
+                    { value: '25-35', label: '25–35 min · busy kitchen' },
+                  ]}
+                />
               </Field>
             </Card>
 
@@ -339,10 +341,10 @@ export default function OperatingHours() {
           </Field>
           <div className="grid grid-cols-2 gap-3">
             <Field label="From">
-              <Input type="date" value={closure.from} onChange={(e) => setClosure({ ...closure, from: e.target.value })} />
+              <DatePicker value={closure.from} onChange={(from) => setClosure({ ...closure, from })} />
             </Field>
             <Field label="To" error={closureInvalid ? 'Must be on or after the start date' : undefined}>
-              <Input type="date" min={closure.from} value={closure.to} invalid={closureInvalid} onChange={(e) => setClosure({ ...closure, to: e.target.value })} />
+              <DatePicker min={closure.from} value={closure.to} invalid={closureInvalid} onChange={(to) => setClosure({ ...closure, to })} />
             </Field>
           </div>
         </div>

@@ -59,6 +59,11 @@
   --animate-toast-out: toast-out 200ms var(--ease-snappy) 3000ms forwards;
   --animate-shake: shake 320ms var(--ease-snappy);
 
+  --animate-slide-progress: slide-progress 7s linear forwards;
+
+  @keyframes slide-progress {
+    from { transform: scaleX(0); }
+  }
   @keyframes fade-in {
     from { opacity: 0; }
   }
@@ -126,8 +131,10 @@ a,
   outline: 2px solid var(--color-brand-700);
   outline-offset: 2px;
 }
+[role="dialog"]:focus-visible,
+[role="combobox"]:focus-visible,
+main:focus-visible,
 input:focus-visible,
-select:focus-visible,
 textarea:focus-visible {
   outline: none;
 }
@@ -157,13 +164,6 @@ textarea:focus-visible {
   display: none;
 }
 
-/* Native time/date pickers: align icon colour with our muted ink. */
-input[type="time"]::-webkit-calendar-picker-indicator,
-input[type="date"]::-webkit-calendar-picker-indicator {
-  opacity: 0.55;
-  cursor: pointer;
-}
-
 /*
  * Reduced motion: fewer and gentler, not zero. Overlays and toasts keep their fade
  * (it tells you something appeared) but lose all movement.
@@ -177,6 +177,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   @keyframes drawer-out { to { opacity: 0; } }
   @keyframes toast-out { to { opacity: 0; } }
   @keyframes shake { from { opacity: 1; } }
+  .animate-slide-progress {
+    animation: none !important;
+  }
   html {
     scroll-behavior: auto !important;
   }

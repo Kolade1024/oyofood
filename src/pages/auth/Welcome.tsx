@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { ArrowRight, BadgeCheck, Globe } from 'lucide-react'
-import { AuthLayout, HeroCard } from '../../components/AuthLayout'
+import { AuthLayout } from '../../components/AuthLayout'
 import { Button } from '../../components/ui'
 import { GoogleButton } from './GoogleButton'
 import { useApp } from '../../context/AppContext'
@@ -16,7 +15,6 @@ const copy = {
     login: 'Log in',
     or: 'Or continue with',
     google: 'Continue with Google',
-    selected: 'Selected: English',
   },
   yo: {
     title: 'Ẹ káàbọ̀ sí OYO FOOD',
@@ -26,7 +24,6 @@ const copy = {
     login: 'Wọlé',
     or: 'Tàbí tẹ̀síwájú pẹ̀lú',
     google: 'Tẹ̀síwájú pẹ̀lú Google',
-    selected: 'Àṣàyàn: Yorùbá',
   },
 }
 
@@ -41,26 +38,9 @@ export default function Welcome() {
   const t = copy[lang]
 
   return (
-    <AuthLayout
-      eyebrow="The #1 food vendor platform"
-      title="Join OYO Food"
-      lead="Register your restaurant and start receiving orders from thousands of hungry customers across Nigeria."
-      panel={<HeroCard />}
-      footerLeft={
-        <>
-          <BadgeCheck size={16} /> Zero onboarding fee • Fast 24hr KYC verification
-        </>
-      }
-      footerRight={<span className="flex gap-4">Lagos <span>•</span> Ibadan <span>•</span> Abuja</span>}
-    >
-      <div className="flex justify-end text-xs text-muted">
-        <span className="flex items-center gap-1.5">
-          <Globe size={14} /> {t.selected}
-        </span>
-      </div>
-
-      <div className="mx-auto my-auto w-full max-w-[448px] py-10">
-        <h2 className="font-display text-[32px] font-extrabold tracking-tight text-ink">{t.title}</h2>
+    <AuthLayout>
+      <div className="mx-auto my-auto w-full max-w-[400px] py-10">
+        <h2 className="text-[22px] font-semibold tracking-tight text-ink">{t.title}</h2>
         <p className="mt-3 text-[15px] leading-6 text-muted">{t.lead}</p>
 
         <p className="mt-10 text-[15px] font-semibold">{t.select}</p>
@@ -101,14 +81,14 @@ export default function Welcome() {
           })}
         </div>
 
-        <Button size="lg" className="mt-10 w-full" iconRight={<ArrowRight size={18} />} onClick={() => nav('/signup/1')}>
+        <Button className="mt-10 w-full" onClick={() => nav('/signup/1')}>
           {t.signup}
         </Button>
         <Button
           variant="outline"
           size="md"
           className="mt-3 w-full border-line"
-          iconRight={<ArrowRight size={16} />}
+         
           onClick={() => nav('/login')}
         >
           {t.login}
@@ -131,7 +111,7 @@ export default function Welcome() {
 
 export function Divider({ label }: { label: string }) {
   return (
-    <div className="my-8 flex items-center gap-4 text-[11px] font-semibold uppercase tracking-wider text-gray-500">
+    <div className="my-7 flex items-center gap-3.5 text-xs text-muted">
       <span className="h-px flex-1 bg-line" />
       {label}
       <span className="h-px flex-1 bg-line" />
@@ -142,8 +122,8 @@ export function Divider({ label }: { label: string }) {
 export function LegalFooter() {
   return (
     <p className="border-t border-line pt-6 text-center text-xs text-gray-600">
-      By continuing, you agree to OYO Food's <a className="font-medium text-brand hover:underline" href="#">Terms of Service</a> and{' '}
-      <a className="font-medium text-brand hover:underline" href="#">Privacy Policy</a>.
+      By continuing, you agree to OYO Food's <a className="font-medium text-brand-fg hover:underline" href="#">Terms of Service</a> and{' '}
+      <a className="font-medium text-brand-fg hover:underline" href="#">Privacy Policy</a>.
     </p>
   )
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { BadgeCheck, Banknote, Download } from 'lucide-react'
-import { Badge, Button, Card, CardHeader, Field, Input, Modal, PageBody, PageHeader, Select, StatCard, Table, Td, Th, Tr } from '../../components/ui'
+import { Badge, Button, Card, CardHeader, Field, Input, Modal, PageBody, PageHeader, StatCard, Table, Td, Th, Tr } from '../../components/ui'
+import { Select } from '../../components/Select'
 import { useApp } from '../../context/AppContext'
 import { banks, transactions, vendor } from '../../data/mock'
 import { cx, naira } from '../../lib/format'
@@ -13,6 +14,7 @@ export default function Earnings() {
   const [payoutOpen, setPayoutOpen] = useState(false)
   const [bankOpen, setBankOpen] = useState(false)
   const [amount, setAmount] = useState('')
+  const [period, setPeriod] = useState('week')
   const [bankDraft, setBankDraft] = useState({ name: bank.name, nuban: bank.nuban })
 
   const instantFee = (n: number) => Math.min(Math.round(n * 0.01), 1000)
@@ -156,11 +158,18 @@ export default function Earnings() {
             className="p-5"
             title="Transactions"
             action={
-              <Select aria-label="Period" className="h-9 w-auto border-line-strong text-[13px]" defaultValue="week">
-                <option value="week">This week · Nov 5–11</option>
-                <option value="last">Last week</option>
-                <option value="month">This month</option>
-              </Select>
+              <Select
+                aria-label="Period"
+                align="right"
+                className="h-9 w-auto! border-line-strong sm:text-[13px]"
+                value={period}
+                onChange={setPeriod}
+                options={[
+                  { value: 'week', label: 'This week · Nov 5–11' },
+                  { value: 'last', label: 'Last week' },
+                  { value: 'month', label: 'This month' },
+                ]}
+              />
             }
           />
           <Table minWidth={820}>
@@ -295,11 +304,7 @@ export default function Earnings() {
       >
         <div className="space-y-4">
           <Field label="Bank">
-            <Select value={bankDraft.name} onChange={(e) => setBankDraft({ ...bankDraft, name: e.target.value })}>
-              {banks.map((b) => (
-                <option key={b}>{b}</option>
-              ))}
-            </Select>
+            <Select searchable value={bankDraft.name} onChange={(name) => setBankDraft({ ...bankDraft, name })} options={banks} />
           </Field>
           <Field
             label="Account number (NUBAN)"

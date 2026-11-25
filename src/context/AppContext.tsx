@@ -15,6 +15,8 @@ export interface SignupDraft {
   ownerName: string
   restaurantName: string
   email: string
+  /** The address the 6-digit code was entered for. */
+  verifiedEmail: string
   phone: string
   password: string
   restaurantType: string
@@ -40,6 +42,7 @@ const emptyDraft: SignupDraft = {
   ownerName: '',
   restaurantName: '',
   email: '',
+  verifiedEmail: '',
   phone: '',
   password: '',
   restaurantType: '',

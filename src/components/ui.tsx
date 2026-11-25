@@ -5,10 +5,9 @@ import type {
   InputHTMLAttributes,
   KeyboardEvent as ReactKeyboardEvent,
   ReactNode,
-  SelectHTMLAttributes,
   TextareaHTMLAttributes,
 } from 'react'
-import { Check, ChevronDown, CircleAlert, CircleCheck, Info, LoaderCircle, Search, TrendingDown, TrendingUp, X } from 'lucide-react'
+import { Check, CircleAlert, CircleCheck, Info, LoaderCircle, Search, TrendingDown, TrendingUp, X } from 'lucide-react'
 import { cx, initials } from '../lib/format'
 import { useApp } from '../context/AppContext'
 
@@ -246,17 +245,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     </div>
   )
 })
-
-export function Select({ className, children, ...rest }: SelectHTMLAttributes<HTMLSelectElement>) {
-  return (
-    <div className="relative">
-      <select className={cx(inputBase, 'h-10 cursor-pointer appearance-none pl-3 pr-9', className)} {...rest}>
-        {children}
-      </select>
-      <ChevronDown size={16} className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted" />
-    </div>
-  )
-}
 
 export function Textarea({ className, ...rest }: TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return <textarea className={cx(inputBase, 'min-h-[88px] resize-y px-3 py-2.5 leading-6', className)} {...rest} />

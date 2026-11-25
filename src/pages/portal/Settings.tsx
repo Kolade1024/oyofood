@@ -14,12 +14,12 @@ import {
   Modal,
   PageBody,
   PageHeader,
-  Select,
   Tabs,
   Textarea,
   Toggle,
   useLatchedValue,
 } from '../../components/ui'
+import { Select } from '../../components/Select'
 import { useApp } from '../../context/AppContext'
 import { vendor } from '../../data/mock'
 
@@ -292,16 +292,13 @@ export default function Settings() {
                     <Select
                       aria-label={`Role for ${s.name}`}
                       value={s.role}
-                      className="h-9 w-40 border-line-strong text-[13px]"
-                      onChange={(e) => {
-                        setStaff((st) => st.map((x, j) => (j === i ? { ...x, role: e.target.value } : x)))
-                        notify(`${s.name.split(' ')[0]} is now ${e.target.value}`, 'info')
+                      className="h-9 w-40! border-line-strong sm:text-[13px]"
+                      onChange={(role) => {
+                        setStaff((st) => st.map((x, j) => (j === i ? { ...x, role } : x)))
+                        notify(`${s.name.split(' ')[0]} is now ${role}`, 'info')
                       }}
-                    >
-                      {staffRoles.map((r) => (
-                        <option key={r}>{r}</option>
-                      ))}
-                    </Select>
+                      options={staffRoles}
+                    />
                     <IconButton size="sm" variant="dangerGhost" label={`Remove ${s.name}`} onClick={() => setRemoving(i)}>
                       <Trash2 size={16} />
                     </IconButton>
@@ -348,11 +345,7 @@ export default function Settings() {
             <Input type="email" value={invite.email} onChange={(e) => setInvite({ ...invite, email: e.target.value })} />
           </Field>
           <Field label="Role">
-            <Select value={invite.role} onChange={(e) => setInvite({ ...invite, role: e.target.value })}>
-              {staffRoles.map((r) => (
-                <option key={r}>{r}</option>
-              ))}
-            </Select>
+            <Select value={invite.role} onChange={(role) => setInvite({ ...invite, role })} options={staffRoles} />
           </Field>
         </form>
       </Modal>

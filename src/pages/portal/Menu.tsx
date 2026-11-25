@@ -12,7 +12,6 @@ import {
   PageBody,
   PageHeader,
   SearchInput,
-  Select,
   Sheet,
   Tabs,
   Textarea,
@@ -20,6 +19,7 @@ import {
   useLatchedValue,
 } from '../../components/ui'
 import { CustomerPreview } from '../../components/CustomerPreview'
+import { Select } from '../../components/Select'
 import { useApp } from '../../context/AppContext'
 import { addOns as defaultAddOns, categories as defaultCategories } from '../../data/mock'
 import type { Meal } from '../../data/mock'
@@ -321,11 +321,7 @@ export default function Menu() {
             <Input placeholder="e.g. Asun Fried Rice with Grilled Turkey" value={form.name} invalid={!!errors.name} onChange={(e) => set({ name: e.target.value })} />
           </Field>
           <Field label="Category" required>
-            <Select value={form.category} onChange={(e) => set({ category: e.target.value })}>
-              {cats.map((c) => (
-                <option key={c}>{c}</option>
-              ))}
-            </Select>
+            <Select value={form.category} onChange={(category) => set({ category })} options={cats} />
           </Field>
           <Field label="Description" required error={errors.description} hint="Ingredients, cooking style and portion size.">
             <Textarea
